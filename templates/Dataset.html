@@ -1,0 +1,144 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Dataset ISPU</title>
+    <div class="text-center mb-2">
+        <!-- Judul Besar -->
+        <h1> LIST DATASET ISPU </h1>
+        <i> Berikut Dataset ISPU dari 1 januari 2015 - 31 oktober 2021 </i>
+        <style>
+            div {
+                background-image: url('static/gambar/monas2.jpg');
+            }
+        </style>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css"
+        rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/filterDropDown.js') }}"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.js"></script>
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            var dataTable = $('#sample_data');
+            $('#sample_data').DataTable({
+                // Definition of filter to display
+                // format is: idx of column to filter on => text to show as filter name or NULL to use corresponding column header as name
+                // also works great with invisible columns e.g. for using unformated data as input
+                filterDropDown: {
+                    columns: [
+                        {
+                            idx: 1,
+                            title: "Tanggal",
+                            maxWidth: "200px"
+                        },
+                        {
+                            idx: 2,
+                            title: "Stasiun"
+                        }
+                    ],
+                    bootstrap: false
+                }
+            });
+
+            $('#sample_data').editable({
+                container: 'body',
+                selector: 'td.tanggal',
+                url: '/updateemployee',
+                title: 'Tanggal',
+                type: 'POST',
+                validate: function (value) {
+                    if ($.trim(value) == '') {
+                        return 'This field is required';
+                    }
+                }
+            });
+
+            $('#sample_data').editable({
+                container: 'body',
+                selector: 'td.stasiun',
+                url: '/updateemployee',
+                title: 'Stasiun',
+                type: 'POST',
+                validate: function (value) {
+                    if ($.trim(value) == '') {
+                        return 'This field is required';
+                    }
+                }
+            });
+
+            $('#sample_data').editable({
+                container: 'body',
+                selector: 'td.pm10',
+                url: '/updateemployee',
+                title: 'Pm10',
+                type: 'POST',
+                validate: function (value) {
+                    if ($.trim(value) == '') {
+                        return 'This field is required';
+                    }
+                }
+            });
+        }); 
+    </script>
+       
+
+</head>
+
+<body style="background-color:rgb(220, 237, 240);">
+    <div class="container">
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">DataTable</div>
+            <div class="panel-body">
+                 <div class="table-responsive">
+                    <table id="sample_data" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Stasiun</th>
+                                <th>PM10</th>
+                                <th>SO2</th>
+                                <th>CO</th>
+                                <th>O3</th>
+                                <th>NO2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in data %}
+                            <tr>
+                                <td data-pk="{{row.id}}">{{row.id}}</td>
+                                <td data-name="tanggal" class="tanggal" data-type="text" data-pk="{{row.id}}">{{row.tanggal}}
+                                </td>
+                                <td data-name="stasiun" class="stasiun" data-type="text" data-pk="{{row.id}}">{{row.stasiun}}
+                                </td>
+                                <td data-name="pm10" class="pm10" data-type="text" data-pk="{{row.id}}">{{row.pm10}}
+                                </td>
+                                <td data-name="so2" class="so2" data-type="text" data-pk="{{row.id}}">{{row.so2}}
+                                </td>
+                                <td data-name="co" class="co" data-type="text" data-pk="{{row.id}}">{{row.co}}
+                                </td>
+                                <td data-name="o3" class="o3" data-type="text" data-pk="{{row.id}}">{{row.o3}}
+                                </td>
+                                <td data-name="no2" class="no2" data-type="text" data-pk="{{row.id}}">{{row.no2}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+</body>
+</html>
